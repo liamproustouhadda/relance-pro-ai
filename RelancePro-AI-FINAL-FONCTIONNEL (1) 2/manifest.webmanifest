@@ -1,0 +1,10 @@
+{
+  "name": "RelancePro AI",
+  "short_name": "RelancePro",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b0912",
+  "theme_color": "#0b0912",
+  "lang": "fr",
+  "description": "Copilote commercial IA pour artisans."
+}

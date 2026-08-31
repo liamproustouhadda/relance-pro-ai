@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RelancePro AI — Ne perdez plus aucun chantier | Copilote commercial IA</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
+:root{
+ --bg:#08070f;--bg2:#0d0b18;--surface:#11101b;--surface2:#171526;--card:#ffffff;
+ --text:#f7f7fb;--ink:#15131f;--muted:#9a96aa;--muted2:#6f6a7d;
+ --line:rgba(255,255,255,.09);--lightline:#e8e6ef;
+ --primary:#6d3df5;--primary2:#3d72f5;--violet:#9b78ff;
+ --green:#29c27c;--red:#ef5b70;--orange:#ff9b45;
+ --shadow:0 20px 70px rgba(0,0,0,.22);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"DM Sans",Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);letter-spacing:-.012em}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+.landing{min-height:100vh;background:
+ radial-gradient(circle at 18% 15%,rgba(109,61,245,.20),transparent 30%),
+ radial-gradient(circle at 82% 75%,rgba(61,114,245,.14),transparent 28%),
+ linear-gradient(180deg,#090712,#08070f);
+ position:relative;overflow:hidden}
+.landing:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 92%);pointer-events:none}
+.landing-nav{height:82px;max-width:1440px;margin:auto;padding:0 42px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px}
+.brandmark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7549ff,#456ef4);display:grid;place-items:center;box-shadow:0 8px 25px rgba(101,63,240,.35)}
+.brandmark:after{content:"✦";font-size:15px}
+.landing-nav nav{display:flex;gap:34px}
+.landing-nav nav a{color:#aaa6b6;text-decoration:none;font-size:14px;transition:.2s}
+.landing-nav nav a:hover{color:#fff}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.link-btn{background:none;color:#aaa6b6;padding:10px 12px}
+.nav-plus{padding:11px 18px;border-radius:9px;background:linear-gradient(135deg,#7041f7,#386cf4);color:white;font-weight:700;box-shadow:0 8px 22px rgba(80,64,220,.25)}
+.hero-marketing{position:relative;z-index:1;text-align:center;max-width:1200px;margin:0 auto;padding:70px 24px 105px}
+.pill{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(143,99,255,.45);background:rgba(90,43,170,.16);border-radius:999px;padding:9px 16px;color:#bda9ff;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.pill-dot{width:7px;height:7px;border-radius:50%;background:#a274ff;box-shadow:0 0 13px #8d5cff}
+.hero-title{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(62px,7vw,116px);line-height:.91;letter-spacing:-.045em;font-weight:400;margin:42px auto 30px;max-width:1120px}
+.hero-title .accent{background:linear-gradient(100deg,#a57aff,#5e94ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{max-width:760px;margin:0 auto;color:#9f9aaa;font-size:18px;line-height:1.7}
+.hero-actions{display:flex;justify-content:center;gap:14px;margin-top:34px;flex-wrap:wrap}
+.cta-primary{padding:16px 28px;border-radius:11px;background:linear-gradient(100deg,#753cf5,#376ff5);color:#fff;font-weight:700;box-shadow:0 14px 34px rgba(91,58,240,.28)}
+.cta-secondary{padding:15px 25px;border-radius:11px;background:rgba(255,255,255,.01);border:1px solid #51456f;color:#b7a9df;font-weight:600}
+.trust{margin-top:42px;color:#777286;font-size:13px}
+.avatars{display:flex;justify-content:center;margin-bottom:11px}
+.avatars span{width:33px;height:33px;border-radius:50%;display:grid;place-items:center;margin-left:-5px;border:2px solid #0a0911;background:linear-gradient(135deg,#6540ef,#d43caa);font-size:11px;font-weight:800;color:#fff}
+.product-preview{max-width:1180px;margin:0 auto 80px;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:rgba(255,255,255,.035);padding:9px;box-shadow:0 35px 100px rgba(0,0,0,.35)}
+.preview-window{border-radius:12px;background:#f7f7fb;color:#141320;overflow:hidden;text-align:left;min-height:430px}
+.preview-top{height:46px;background:#fff;border-bottom:1px solid #e7e6ee;display:flex;align-items:center;justify-content:space-between;padding:0 17px}
+.preview-brand{font-weight:800;color:#161426}.preview-dots{display:flex;gap:5px}.preview-dots i{width:7px;height:7px;border-radius:50%;background:#d7d5df}
+.preview-body{display:grid;grid-template-columns:175px 1fr;min-height:384px}
+.preview-side{background:#11101b;color:#a9a5b6;padding:18px 12px}.preview-side b{display:block;color:#fff;margin:4px 8px 22px}.preview-side div{padding:9px 10px;border-radius:8px;font-size:12px;margin:3px 0}.preview-side div.active{background:#6b45ed;color:#fff}
+.preview-main{padding:25px}.preview-main h3{margin:0;font-size:20px}.preview-main p{color:#747083;font-size:12px;margin:6px 0 20px}
+.preview-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini-stat{background:#fff;border:1px solid #e8e7ef;border-radius:11px;padding:14px}.mini-stat small{color:#777385}.mini-stat strong{display:block;font-size:21px;margin-top:5px}
+.preview-grid{display:grid;grid-template-columns:1.35fr .8fr;gap:12px;margin-top:12px}.chart,.priority{background:#fff;border:1px solid #e8e7ef;border-radius:11px;padding:16px}.chart-line{height:145px;display:flex;align-items:end;gap:7px;padding-top:15px}.chart-line i{flex:1;border-radius:5px 5px 0 0;background:linear-gradient(180deg,#8062ef,#4f7df5);opacity:.9}.priority .hot{display:inline-block;background:#fff0f3;color:#d33f55;padding:5px 8px;border-radius:7px;font-size:10px;font-weight:800}.priority h4{margin:12px 0 3px}.priority p{margin:0 0 14px;color:#7b7687;font-size:11px}.preview-button{background:#6845e9;color:#fff;border:0;border-radius:7px;padding:9px 12px;font-size:11px;font-weight:700}
+.section-dark{padding:110px 24px;background:#08070f}.section-inner{max-width:1180px;margin:auto}.eyebrow-dark{color:#9674ff;text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.13em}.section-title-dark{font-family:"DM Serif Display",Georgia,serif;font-size:56px;line-height:1;margin:12px 0 16px;font-weight:400;letter-spacing:-.035em}.section-copy-dark{color:#9893a5;max-width:650px;line-height:1.7}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:42px}.feature-card{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025);border-radius:16px;padding:28px;min-height:220px;transition:.25s}.feature-card:hover{transform:translateY(-3px);border-color:rgba(139,103,255,.35)}.feature-icon{width:40px;height:40px;border-radius:11px;background:rgba(109,61,245,.18);color:#b18fff;display:grid;place-items:center;margin-bottom:22px}.feature-card h3{font-size:20px;margin:0 0 9px}.feature-card p{color:#898496;line-height:1.6;margin:0}.feature-card button{margin-top:22px}
+.app-shell{display:flex;min-height:100vh;background:var(--bg);color:var(--text)}
+.sidebar{width:250px;background:#0d0b15;color:#fff;padding:22px 15px;position:fixed;inset:0 auto 0 0;border-right:1px solid rgba(255,255,255,.07)}
+.logo{display:flex;gap:10px;align-items:center;padding:5px 10px 28px;font-weight:800;font-size:18px}.logo-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7044f5,#4879f5);display:grid;place-items:center}.logo small{color:#a894ff}
+.nav{display:grid;gap:5px}.nav button{background:transparent;color:#9994a9;text-align:left;padding:12px 13px;border-radius:10px;display:flex;gap:11px;align-items:center;font-weight:600}.nav button.active,.nav button:hover{background:#211b36;color:#fff}
+.trial{position:absolute;left:15px;right:15px;bottom:18px;background:#151221;border:1px solid #30264c;border-radius:14px;padding:15px}.trial small{color:#888398}.trial b{display:block;margin:5px 0 10px}.upgrade{width:100%;background:linear-gradient(100deg,#7041f7,#386cf4);color:#fff;border-radius:8px;padding:9px;font-weight:700}
+.main{margin-left:250px;width:calc(100% - 250px);background:#0b0912}.topbar{height:70px;background:#0d0b15;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:4}.crumb{font-size:13px;color:#777285}.crumb b{color:#e6e3ec}.avatar{width:36px;height:36px;border-radius:50%;background:#29213e;color:#c5b6ff;display:grid;place-items:center;font-weight:800}
+.content{padding:30px;max-width:1500px;margin:auto}.page{display:none}.page.active{display:block}.hero{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:25px}.eyebrow{color:#9a78ff;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.12em}.hero h1{font-family:"DM Serif Display",Georgia,serif;font-size:46px;line-height:1;margin:8px 0;letter-spacing:-.03em;font-weight:400;color:#fff}.hero p{color:#8f8a9d;margin:0;line-height:1.6}
+.primary{background:linear-gradient(100deg,#7041f7,#386cf4);color:#fff;padding:12px 17px;border-radius:9px;font-weight:800;box-shadow:0 8px 24px rgba(84,62,205,.22)}.secondary{background:rgba(255,255,255,.03);border:1px solid #383249;color:#b9b3c5;padding:11px 15px;border-radius:9px;font-weight:700}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.card{background:#12101b;border:1px solid rgba(255,255,255,.08);border-radius:14px;box-shadow:none}.metric{padding:19px}.metric .label{color:#858092;font-size:12px}.metric .value{font-size:27px;font-weight:850;margin:7px 0;color:#fff}.trend{font-size:12px;color:#39c985}.muted{color:#7e788b}
+.grid{display:grid;grid-template-columns:1.4fr .9fr;gap:14px;margin-top:14px}.card-head{padding:17px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center}.card-head h3{margin:0;font-size:14px;color:#f2eff7}
+.actions{padding:8px}.action{padding:13px 12px;border-radius:10px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}.action:hover{background:#191622}.score{width:42px;height:42px;border-radius:10px;background:#2a2116;color:#ffad56;display:grid;place-items:center;font-weight:850}.score.hot{background:#2c1720;color:#ff7184}.action b{font-size:13px;color:#f4f1f7}.action span{font-size:11px;color:#817b8d}.tag{font-size:10px;font-weight:800;padding:5px 8px;border-radius:7px;background:#251d3b;color:#a990ff}
+.follow{padding:15px 20px}.follow-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}.follow-row:last-child{border:0}.status{font-size:10px;font-weight:800;padding:5px 8px;border-radius:7px}.late{background:#301720;color:#ff7282}.today{background:#302416;color:#ffb45e}.future{background:#142b22;color:#48cf91}
+.toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}.search{background:#12101b;color:#fff;border:1px solid #332d40;padding:11px 13px;border-radius:9px;min-width:260px;outline:none}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left;font-size:12px}.table th{font-size:10px;text-transform:uppercase;color:#797387}.prospect-name{font-weight:800;color:#f5f2f8}
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;overflow:auto}.column{min-width:230px;background:#100e18;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px}.column-title{display:flex;justify-content:space-between;font-size:11px;font-weight:850;padding:6px;color:#bbb5c7}.lead{background:#171520;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px;margin:8px 0}.lead b{font-size:12px;color:#eee}.lead p{font-size:10px;color:#858092;margin:5px 0 10px}.lead-foot{display:flex;justify-content:space-between;align-items:center}
+.ai{background:linear-gradient(145deg,#171326,#12101b);border-color:#30254c}.chat{height:470px;display:flex;flex-direction:column}.messages{padding:20px;overflow:auto;flex:1}.bubble{max-width:75%;padding:12px 14px;border-radius:12px;margin:9px 0;font-size:12px;line-height:1.5}.bot{background:#1b1727;color:#d5d0dc}.me{background:#6844e9;color:#fff;margin-left:auto}.chat-input{display:flex;gap:8px;padding:13px;border-top:1px solid rgba(255,255,255,.07)}.chat-input input{flex:1;border:1px solid #352e42;background:#0f0d17;color:#fff;border-radius:9px;padding:11px}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.plan{padding:25px;position:relative}.popular{border:1px solid #7653ed;box-shadow:0 0 0 1px rgba(118,83,237,.12),0 20px 60px rgba(82,54,180,.12)}.ribbon{position:absolute;right:16px;top:16px;background:#2a1e4c;color:#b99eff;padding:5px 8px;border-radius:7px;font-size:9px;font-weight:900}.price{font-size:36px;font-weight:900;margin:18px 0;color:#fff}.price small{font-size:12px;color:#888295;font-weight:500}.plan li{margin:12px 0;color:#8e8899;font-size:12px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;place-items:center;z-index:10;padding:20px}.modal.open{display:grid}.modal-box{background:#15121f;color:#fff;width:min(620px,100%);border:1px solid #352d44;border-radius:16px;padding:22px}.form{display:grid;gap:12px}.form input,.form textarea,.form select{width:100%;padding:11px;background:#0e0c15;color:#fff;border:1px solid #342e40;border-radius:9px;outline:none}.form textarea{min-height:100px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:5px}.notice{background:#201936;color:#bba7ff;padding:12px 14px;border-radius:9px;font-size:11px}.empty{padding:45px;text-align:center;color:#777184}
+@media(max-width:900px){.landing-nav{padding:0 22px}.landing-nav nav{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.grid,.pricing{grid-template-columns:1fr}.content{padding:20px}.topbar{padding:0 20px}.preview-body{grid-template-columns:1fr}.preview-side{display:none}.preview-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.landing-nav{height:68px}.hero-marketing{padding:58px 18px 70px}.hero-title{font-size:57px}.hero-sub{font-size:15px}.section-title-dark{font-size:43px}.feature-grid{grid-template-columns:1fr}.product-preview{display:none}.metrics{grid-template-columns:1fr 1fr}.hero{align-items:flex-start;gap:14px;flex-direction:column}.hero h1{font-size:38px}.primary{width:100%}.sidebar{display:none}.main{margin-left:0;width:100%}.topbar{padding:0 14px}.content{padding:18px 14px 92px}.table{min-width:720px}.card:has(.table){overflow:auto}.kanban{grid-template-columns:repeat(4,230px)}}
+</style>
+
+
+<style>
+/* V3 premium polish */
+.nav button{font-weight:600}
+.nav button.active{box-shadow:inset 2px 0 0 var(--primary)}
+.primary{letter-spacing:-.01em}
+.card-head{min-height:24px}
+.metric .label{font-weight:600}
+.tag{letter-spacing:.01em}
+.action{transition:background .18s ease,transform .18s ease}
+.action:hover{transform:translateY(-1px)}
+.lead{transition:transform .18s ease,box-shadow .18s ease}
+.lead:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(16,24,40,.07)}
+@media(max-width:600px){
+ .content{padding:18px 14px 92px}
+ .topbar{height:62px}
+ .hero h1{font-size:27px}
+ .sidebar{display:none}
+ .main{margin-left:0;width:100%}
+ .topbar:after{content:'RelancePro AI';font-weight:800;color:#171827;position:absolute;left:50%;transform:translateX(-50%)}
+ .nav{display:none}
+}
+</style>
+
+<meta name="theme-color" content="#0b0912">
+<meta name="description" content="RelancePro AI — le copilote commercial IA des artisans. Trouvez des chantiers, analysez les demandes, préparez vos devis et relancez vos prospects.">
+<link rel="manifest" href="manifest.webmanifest">
+
+<script src="./config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>window.RPBackend={client:null,enabled:false,async init(){const c=window.RELANCEPRO_CONFIG||{};if(!c.SUPABASE_URL||!c.SUPABASE_ANON_KEY||!window.supabase)return false;this.client=window.supabase.createClient(c.SUPABASE_URL,c.SUPABASE_ANON_KEY);this.enabled=true;return true},async session(){if(!this.enabled)return null;return (await this.client.auth.getSession()).data.session},async signOut(){if(this.enabled)await this.client.auth.signOut()}};RPBackend.init();</script></head>
+<body>
+
+<div class="landing" id="landingPage">
+  <header class="landing-nav">
+    <div class="brand"><div class="brandmark"></div>RelancePro <span style="color:#9b7cff">AI</span></div>
+    <nav>
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#parcours">Solutions</a>
+      <a href="#tarifs" onclick="openApp('pricing');return false">Tarifs</a>
+      <a href="#contact">À propos</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="link-btn" onclick="openApp('dashboard')">Connexion</button>
+      <button class="nav-plus" onclick="openApp('pricing')">Plus</button>
+    </div>
+  </header>
+
+  <section class="hero-marketing">
+    <div class="pill"><span class="pill-dot"></span> Le copilote commercial IA des artisans</div>
+    <h1 class="hero-title">Ne perdez plus aucun <span class="accent">chantier.</span></h1>
+    <p class="hero-sub">Trouvez de nouveaux travaux, identifiez vos prospects les plus rentables, analysez vos demandes et relancez vos clients avec l'IA.</p>
+    <div class="hero-actions">
+      <button class="cta-primary" onclick="openApp('dashboard')">Démarrer gratuitement →</button>
+      <button class="cta-secondary" onclick="openApp('dashboard')">Voir la démo</button>
+    </div>
+    <div class="trust"><div class="avatars"><span>JM</span><span>CL</span><span>TB</span><span>SL</span><span>MP</span></div>Déjà pensé pour les artisans qui veulent travailler plus intelligemment.</div>
+  </section>
+
+  <section class="product-preview" aria-label="Aperçu de RelancePro AI">
+    <div class="preview-window">
+      <div class="preview-top"><div class="preview-brand">RelancePro AI</div><div class="preview-dots"><i></i><i></i><i></i></div></div>
+      <div class="preview-body">
+        <div class="preview-side"><b>Votre activité</b><div class="active">Tableau de bord</div><div>Prospects</div><div>Chantiers</div><div>Relances</div><div>Assistant IA</div></div>
+        <div class="preview-main">
+          <h3>Bonjour 👋</h3><p>Voici ce qui mérite votre attention aujourd'hui.</p>
+          <div class="preview-stats"><div class="mini-stat"><small>CA potentiel</small><strong>47 850 €</strong></div><div class="mini-stat"><small>Prospects chauds</small><strong>14 🔥</strong></div><div class="mini-stat"><small>Relances</small><strong>8 aujourd'hui</strong></div></div>
+          <div class="preview-grid"><div class="chart"><b>Opportunités commerciales</b><div class="chart-line"><i style="height:32%"></i><i style="height:45%"></i><i style="height:38%"></i><i style="height:58%"></i><i style="height:65%"></i><i style="height:78%"></i><i style="height:91%"></i></div></div><div class="priority"><span class="hot">ACTION PRIORITAIRE</span><h4>Rénovation salle de bain</h4><p>Julien Martin · 8 500 € · Score 94/100 · Probabilité 82 %</p><button class="preview-button">Relancer maintenant →</button></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark" id="fonctionnalites">
+    <div class="section-inner">
+      <div class="eyebrow-dark">Deux leviers immédiats</div>
+      <h2 class="section-title-dark">Plus de chantiers.<br>Moins de temps perdu.</h2>
+      <p class="section-copy-dark">RelancePro AI centralise les actions qui font avancer votre activité : trouver des opportunités et transformer rapidement une demande en prochaine action commerciale.</p>
+      <div class="feature-grid">
+        <article class="feature-card"><div class="feature-icon">⌖</div><h3>Trouvez des chantiers</h3><p>Découvrez les opportunités pertinentes jusqu'à 1h30 autour de vous, avec distance, budget, urgence et score IA.</p><button class="secondary" onclick="openApp('chantiers')">Trouver des chantiers →</button></article>
+        <article class="feature-card"><div class="feature-icon">✦</div><h3>Analysez un chantier</h3><p>Importez une photo, identifiez les besoins visibles et préparez un brouillon de devis à vérifier par le professionnel.</p><button class="secondary" onclick="openApp('photo')">Analyser une photo →</button></article>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="app-shell" id="appShell" style="display:none">
+<aside class="sidebar">
+  <div class="logo"><div class="logo-mark">↗</div><span>RelancePro <small>AI</small></span></div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard">◉ <span>Dashboard</span></button>
+    <button data-page="prospects">◎ <span>Prospects</span></button>
+    <button data-page="followups">◷ <span>Relances</span></button>
+    <button data-page="kanban">▦ <span>Pipeline</span></button>
+    <button data-page="assistant">✦ <span>Assistant IA</span></button>
+    <button data-page="stats">⌁ <span>Statistiques</span></button>
+    <button data-page="pricing">◇ <span>Abonnement</span></button>
+    <button data-page="chantiers">⌖ <span>Trouver des chantiers</span></button>
+    <button data-page="photo">▣ <span>Analyser un chantier</span></button>
+  </nav>
+  <div class="trial"><small>Essai gratuit</small><b>7 jours restants</b><button class="upgrade" data-page="pricing">Voir les offres</button></div>
+</aside>
+
+<main class="main">
+<header class="topbar"><div style="display:flex;align-items:center;gap:16px"><button class="secondary" onclick="showLanding()" style="padding:8px 11px">← Site</button><div class="crumb">Espace entreprise / <b id="crumb">Dashboard</b></div></div><div class="avatar">PO</div></header>
+<div class="content">
+
+<section id="dashboard" class="page active">
+  <div class="hero"><div><div class="eyebrow">Votre copilote commercial IA</div><h1>Ne perdez plus aucun chantier.</h1><p>Trouvez de nouveaux travaux, identifiez vos prospects les plus rentables et sachez exactement qui relancer aujourd'hui.</p></div><button class="primary" id="addBtn">＋ Ajouter un prospect un prospect</button></div>
+  <div class="card feature-banner"><div><div class="eyebrow">NOUVEAU</div><h3>Votre prochain chantier est peut-être à quelques kilomètres.</h3><p class="muted">Trouvez des opportunités pertinentes autour de vous ou analysez un chantier en photo.</p></div><div class="feature-actions"><button class="primary" data-page="chantiers">⌖ Trouver des chantiers</button><button class="secondary" data-page="photo">▣ Analyser un chantier</button></div></div><div class="metrics">
+    <div class="card metric"><div class="label">CA potentiel</div><div class="value" id="metricCA">47 850 €</div><div class="trend">↗ +12,4% ce mois</div></div>
+    <div class="card metric"><div class="label">Prospects</div><div class="value" id="metricProspects">128</div><div class="muted">dans votre pipeline</div></div>
+    <div class="card metric"><div class="label">Prospects chauds</div><div class="value">14 🔥</div><div class="trend">6 à relancer aujourd'hui</div></div>
+    <div class="card metric"><div class="label">Relances aujourd'hui</div><div class="value" id="metricFollowups">8</div><div class="muted">dont 2 en retard</div></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-head"><h3>🔥 Actions prioritaires</h3><button class="secondary" data-page="prospects">Voir tout</button></div><div class="actions" id="actions"></div></div>
+    <div class="card"><div class="card-head"><h3>Relances</h3><button class="secondary" data-page="followups">Agenda</button></div><div class="follow">
+      <div class="follow-row"><div><b>2 relances en retard</b><br><span class="muted">À traiter en priorité</span></div><span class="status late">URGENT</span></div>
+      <div class="follow-row"><div><b>6 aujourd'hui</b><br><span class="muted">Prochaines actions</span></div><span class="status today">AUJOURD'HUI</span></div>
+      <div class="follow-row"><div><b>12 à venir</b><br><span class="muted">Cette semaine</span></div><span class="status future">À VENIR</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section id="prospects" class="page">
+  <div class="hero"><div><div class="eyebrow">CRM intelligent</div><h1>Prospects</h1><p>Une vue claire de toutes vos opportunités.</p></div><button class="secondary" onclick="exportCRM()">Exporter</button><button class="secondary" onclick="resetDemo()">Réinitialiser démo</button><button class="primary" id="addBtn2">＋ Ajouter un prospect</button></div>
+  <div class="toolbar"><input id="search" class="search" placeholder="Rechercher un prospect…"><button class="secondary">Tous les statuts</button><button class="secondary">Score ↓</button></div>
+  <div class="card"><table class="table"><thead><tr><th>Prospect</th><th>Projet</th><th>Valeur</th><th>Score IA</th><th>Statut</th><th>Action</th></tr></thead><tbody id="prospectRows"></tbody></table></div>
+</section>
+
+<section id="followups" class="page">
+  <div class="hero"><div><div class="eyebrow">Ne laissez rien passer</div><h1>Relances</h1><p>Vos prochaines actions, triées par urgence.</p></div><button class="primary" id="scheduleBtn">＋ Planifier</button></div>
+  <div class="grid"><div class="card"><div class="card-head"><h3>À traiter maintenant</h3></div><div id="followList" class="follow"></div></div><div class="card ai"><div class="card-head"><h3>✦ Conseil IA</h3></div><div style="padding:20px"><b>Votre meilleure action</b><p class="muted">Relancez Julien Martin aujourd'hui : score 94/100, projet à 8 500 € et forte intention d'achat. Une réponse personnalisée peut augmenter vos chances de conversion.</p><button class="primary" onclick="generateMessage('Julien Martin')">Générer le message</button></div></div></div>
+</section>
+
+<section id="kanban" class="page">
+  <div class="hero"><div><div class="eyebrow">Pipeline commercial</div><h1>Votre pipeline</h1><p>Visualisez l'avancement de chaque opportunité.</p></div></div>
+  <div class="kanban" id="kanbanBoard"></div>
+</section>
+
+<section id="assistant" class="page">
+  <div class="hero"><div><div class="eyebrow">Copilote commercial</div><h1>Assistant IA</h1><p>Posez une question sur vos prospects et vos relances.</p></div></div>
+  <div class="card chat"><div class="messages" id="messages"><div class="bubble bot">Bonjour ! Je suis votre assistant RelancePro AI. Je peux identifier vos prospects prioritaires, résumer votre pipeline ou préparer un message de relance.</div><div class="bubble me">Qui dois-je relancer aujourd'hui ?</div><div class="bubble bot">🔥 <b>Julien Martin</b> est votre priorité n°1 (94/100). Ensuite : Claire Dubois (89/100) et Thomas Bernard (86/100).</div></div><div class="chat-input"><input id="chatInput" placeholder="Ex. Quels sont mes meilleurs prospects ?"><button class="primary" id="chatBtn">Envoyer</button></div></div>
+</section>
+
+<section id="stats" class="page">
+  <div class="hero"><div><div class="eyebrow">Pilotage</div><h1>Statistiques</h1><p>Comprenez ce qui génère réellement du chiffre.</p></div></div>
+  <div class="card" style="padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+    <div><b>Votre journée en un coup d'œil</b><span class="muted"> · Priorités classées par potentiel et urgence</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="secondary" onclick="page('kanban')">Voir le pipeline</button>
+      <button class="primary" onclick="page('assistant')">✦ Demander à l'IA</button>
+    </div>
+  </div>
+  <div class="metrics"><div class="card metric"><div class="label">Taux de conversion</div><div class="value">24,8%</div><div class="trend">↗ +3,2 pts</div></div><div class="card metric"><div class="label">CA gagné</div><div class="value">31 420 €</div><div class="trend">↗ +18%</div></div><div class="card metric"><div class="label">Relances effectuées</div><div class="value">86</div><div class="muted">ce mois</div></div><div class="card metric"><div class="label">Temps moyen</div><div class="value">4,2 j</div><div class="muted">avant conversion</div></div></div>
+  <div class="card" style="margin-top:18px;padding:25px"><h3>Performance commerciale</h3><div style="height:220px;display:flex;align-items:end;gap:10px;padding-top:25px" id="bars"></div></div>
+</section>
+
+<section id="chantiers" class="page"><div class="hero"><div><div class="eyebrow">Nouvelles opportunités</div><h1>🔎 Trouver des chantiers</h1><p>Découvrez des opportunités correspondant à votre métier et votre zone.</p></div><button class="secondary" onclick="useMyLocation()">📍 Utiliser ma position</button><button class="primary" onclick="searchJobs()">Rechercher autour de moi</button></div><div class="notice">ℹ️ <b>Mode démo actif</b> — les opportunités affichées ci-dessous sont fictives et clairement indiquées. Aucune annonce réelle n'est inventée.</div><div class="card search-panel"><div class="form-grid"><input id="jobTrade" value="Plombier" placeholder="Votre métier"><input id="jobCity" value="Blois" placeholder="Ville ou localisation"><select id="jobRadius"><option>30 min</option><option>1h</option><option selected>1h30</option><option>2h</option></select><button class="secondary" onclick="searchJobs()">🔎 Rechercher</button></div><div class="filters"><span>Filtres :</span><button class="secondary">Distance</button><button class="secondary">Type de travaux</button><button class="secondary">Budget</button><button class="secondary">Date</button><button class="secondary">Urgence</button><button class="secondary">Pertinence</button></div></div><div class="jobs-layout"><div class="card map-demo"><div class="map-label">Carte des opportunités · Démo</div><div class="map-grid"><span class="pin p1">🔥</span><span class="pin p2">💧</span><span class="pin p3">🛠️</span><span class="pin p4">🏠</span></div></div><div id="jobsList" class="jobs-list"></div></div></section>
+<section id="photo" class="page"><div class="hero"><div><div class="eyebrow">Vision IA</div><h1>📸 Analyser un chantier</h1><p>Importez une ou plusieurs photos pour préparer votre pré-analyse.</p></div></div><div class="grid"><div class="card upload-card"><div class="upload-zone" onclick="document.getElementById('photoInput').click()"><div class="upload-icon">📷</div><h3>Prendre ou importer une photo</h3><p class="muted">Plusieurs photos sont acceptées. Ajoutez aussi une description si nécessaire.</p><button class="primary">📁 Choisir des photos</button><input id="photoInput" type="file" accept="image/*" multiple hidden onchange="analyzePhotos(this.files)"></div><textarea id="photoDesc" placeholder="Description complémentaire du chantier…"></textarea><button class="primary" onclick="simulateAnalysis()">✦ Lancer l'analyse IA</button></div><div id="analysisCard" class="card ai analysis-card"><div class="card-head"><h3>🔎 Analyse IA</h3><span class="tag">Pré-analyse</span></div><div class="empty">Ajoutez une photo pour obtenir une analyse.</div></div></div><div class="card quote-card" id="quoteCard"><div class="card-head"><h3>💰 Préparer un devis</h3><span class="tag">Brouillon</span></div><div id="quoteLines"></div><div class="notice">⚠️ Estimation indicative nécessitant une vérification par un professionnel. L'IA ne remplace pas la visite et la validation de l'artisan.</div><button class="primary" onclick="createPhotoProspect()">Créer un prospect avec cette analyse</button></div><div class="card before-after"><div class="card-head"><h3>📷 Comparaison avant / après</h3><button class="secondary" onclick="createReport()">Créer un compte-rendu</button></div><div class="ba-grid"><div><label class="ba-placeholder">AVANT<input type="file" accept="image/*" multiple hidden onchange="previewBA(this,'avantPreview')"><span id="avantPreview">＋ Ajouter des photos</span></label></div><div><label class="ba-placeholder">APRÈS<input type="file" accept="image/*" multiple hidden onchange="previewBA(this,'apresPreview')"><span id="apresPreview">＋ Ajouter des photos</span></label></div></div></div></section>
+<section id="pricing" class="page">
+  <div class="hero"><div><div class="eyebrow">Simple et transparent</div><h1>Le plan qui vous aide à gagner plus de chantiers</h1><p>7 jours gratuits · Sans engagement · Sans carte bancaire · Annulation à tout moment.</p></div></div>
+  <div class="pricing">
+    <div class="card plan"><div class="eyebrow">STARTER</div><div class="price">29 €<small>/mois</small></div><ul><li>50 prospects</li><li>30 analyses IA / mois</li><li>CRM complet</li><li>Relances intelligentes</li></ul><button class="secondary" style="width:100%">Démarrer l'essai</button></div>
+    <div class="card plan popular"><div class="ribbon">LE PLUS POPULAIRE</div><div class="eyebrow">PRO</div><div class="price">69 €<small>/mois</small></div><ul><li>Prospects illimités</li><li>300 analyses IA / mois</li><li>Réponses IA</li><li>Relances intelligentes</li><li>Statistiques + Assistant IA</li><li>Email</li></ul><button class="primary" style="width:100%">Démarrer l'essai</button></div>
+    <div class="card plan"><div class="eyebrow">BUSINESS</div><div class="price">149 €<small>/mois</small></div><ul><li>Tout le plan Pro</li><li>Équipes</li><li>Automatisations</li><li>API</li><li>IA avancée</li><li>Support prioritaire</li></ul><button class="secondary" style="width:100%">Démarrer l'essai</button></div>
+  </div>
+</section>
+</div></main>
+</div>
+
+<div class="modal" id="modal"><div class="modal-box"><div class="card-head" style="padding:0 0 15px;border:0"><h3>Ajouter un prospect</h3><button class="secondary" onclick="closeModal()">Fermer</button></div><div class="form"><input id="newName" placeholder="Nom du prospect"><input id="newProject" placeholder="Projet / demande"><input id="newValue" type="number" placeholder="Valeur estimée (€)"><input id="newEmail" placeholder="Email"><textarea id="newDetails" placeholder="Décrivez la demande du client…"></textarea><div class="notice">✦ Analyse indicative : vérifiez toujours les dimensions, matériaux et contraintes avant le devis final.<br><br>L'IA analysera automatiquement la demande pour estimer le potentiel et recommander la prochaine action.</div><div class="form-actions"><button class="secondary" onclick="closeModal()">Annuler</button><button class="primary" onclick="createProspect()">Analyser avec l'IA</button></div></div></div></div>
+
+<script>
+let prospects=[
+{name:"Julien Martin",project:"Rénovation salle de bain",value:8500,score:94,status:"Devis",email:"julien@example.com"},
+{name:"Claire Dubois",project:"Rénovation cuisine",value:7200,score:89,status:"RDV",email:"claire@example.com"},
+{name:"Thomas Bernard",project:"Terrasse bois",value:5800,score:86,status:"Qualifié",email:"thomas@example.com"},
+{name:"Sophie Leroy",project:"Peinture appartement",value:3200,score:78,status:"Nouveau",email:"sophie@example.com"},
+{name:"Marc Petit",project:"Isolation maison",value:11400,score:72,status:"Négociation",email:"marc@example.com"}
+];
+const followups=[
+["Julien Martin","Rénovation salle de bain","Aujourd'hui","94","hot"],
+["Claire Dubois","Rénovation cuisine","Aujourd'hui","89","hot"],
+["Thomas Bernard","Terrasse bois","En retard","86","hot"],
+["Sophie Leroy","Peinture appartement","Demain","78",""]
+];
+function page(name){
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ document.getElementById(name).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===name));
+ document.getElementById("crumb").textContent={dashboard:"Dashboard",prospects:"Prospects",followups:"Relances",kanban:"Pipeline",assistant:"Assistant IA",stats:"Statistiques",pricing:"Abonnement",chantiers:"Trouver des chantiers",photo:"Analyser un chantier"}[name];
+}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>page(b.dataset.page)));
+function renderProspects(filter=""){
+ const rows=document.getElementById("prospectRows");
+ rows.innerHTML=prospects.filter(p=>(p.name+" "+p.project).toLowerCase().includes(filter.toLowerCase())).map(p=>`<tr><td><div class="prospect-name">${p.name}</div><span class="muted">${p.email}</span></td><td>${p.project}</td><td><b>${p.value.toLocaleString("fr-FR")} €</b></td><td><span class="tag">${p.score}/100 ${p.score>=85?"🔥":""}</span></td><td><span class="tag">${p.status}</span></td><td style="white-space:nowrap"><button class="secondary" onclick="generateMessage('${p.name}')">Relancer</button> <button class="secondary" onclick="editProspect('${p.name}')">Modifier</button></td></tr>`).join("");
+}
+function renderActions(){
+document.getElementById("actions").innerHTML=prospects.slice(0,4).map(p=>`<div class="action"><div class="score ${p.score>=85?"hot":""}">${p.score}</div><div><b>${p.name}</b><br><span>${p.project} · ${p.value.toLocaleString("fr-FR")} €</span></div><button class="primary" onclick="generateMessage('${p.name}')">Relancer</button></div>`).join("");
+}
+function renderFollowups(){
+document.getElementById("followList").innerHTML=followups.map(f=>`<div class="follow-row"><div><b>${f[0]}</b><br><span class="muted">${f[1]}</span></div><span class="status ${f[2]=="En retard"?"late":f[2]=="Aujourd'hui"?"today":"future"}">${f[2]} · ${f[3]}/100</span></div>`).join("");
+}
+function renderKanban(){
+let stages=["Nouveau","Qualifié","RDV","Devis","Négociation","Gagné","Perdu"];
+document.getElementById("kanbanBoard").innerHTML=stages.map(s=>`<div class="column"><div class="column-title">${s}<span>${prospects.filter(p=>p.status===s).length}</span></div>${prospects.filter(p=>p.status===s).map(p=>`<div class="lead"><b>${p.name}</b><p>${p.project}</p><div class="lead-foot"><span class="tag">${p.score}/100</span><span class="muted">${p.value.toLocaleString("fr-FR")} €</span></div><select onchange="moveProspect('${p.name}',this.value)" style="margin-top:9px;width:100%;padding:7px;background:#0f0d17;color:#fff;border:1px solid #342e40;border-radius:7px;font-size:10px">${stages.map(x=>`<option ${x===p.status?'selected':''}>${x}</option>`).join('')}</select></div></div>`).join("")||'<div class="empty" style="padding:25px 5px">Aucun prospect</div>'}</div>`).join("");
+}
+function generateMessage(name){
+let p=prospects.find(x=>x.name===name)||prospects[0];
+alert(`✦ MESSAGE IA — ${name}\\n\\nBonjour ${name},\\n\\nJe fais suite à votre demande concernant ${p.project}. Je souhaitais savoir si votre projet est toujours d'actualité et si nous pouvons avancer ensemble.\\n\\nSeriez-vous disponible pour un court échange afin de finaliser les prochaines étapes ?\\n\\nCordialement,\\n[Votre entreprise]`);
+}
+function openModal(){document.getElementById("modal").classList.add("open")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+function createProspect(){
+let name=document.getElementById("newName").value.trim(), project=document.getElementById("newProject").value.trim(), value=Number(document.getElementById("newValue").value)||0;
+if(!name||!project){alert("Ajoutez au minimum le nom et le projet.");return}
+let score=Math.min(97,Math.max(62,Math.round(70+Math.random()*25)));
+prospects.unshift({name,project,value,score,status:"Nouveau",email:document.getElementById("newEmail").value||"—"});
+closeModal();renderAll();page("prospects");alert(`Analyse IA terminée : ${score}/100.\\n\\nRecommandation : relancer ce prospect dans les prochaines 24 heures.`);
+}
+function renderAll(){renderProspects();renderActions();renderFollowups();renderKanban();document.getElementById("metricProspects").textContent=128+prospects.length-5}
+document.getElementById("addBtn").onclick=openModal;document.getElementById("addBtn2").onclick=openModal;
+document.getElementById("search").addEventListener("input",e=>renderProspects(e.target.value));
+document.getElementById("scheduleBtn").onclick=()=>alert("Planificateur de relance prêt : choisissez le prospect, la date, l'heure et le canal.");
+document.getElementById("chatBtn").onclick=()=>{let i=document.getElementById("chatInput"),v=i.value.trim();if(!v)return;let m=document.getElementById("messages");m.innerHTML+=`<div class="bubble me">${v}</div><div class="bubble bot">✦ D'après votre pipeline, je vous recommande de commencer par <b>Julien Martin</b> (94/100), puis Claire Dubois (89/100). Voulez-vous que je prépare les messages ?</div>`;i.value="";m.scrollTop=m.scrollHeight};
+for(let i=1;i<=8;i++){let b=document.createElement("div");b.style.height=(45+i*14)+"px";b.style.flex="1";b.style.borderRadius="7px 7px 0 0";b.style.background="linear-gradient(180deg,#8a6ff7,#6757e8)";document.getElementById("bars").appendChild(b)}
+/* --- RelancePro AI V5 functional layer --- */
+const STORAGE_KEY='relancepro_prospects_v5';
+const initialProspects=[...prospects];
+try{ const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null'); if(Array.isArray(saved)) prospects=saved; }catch(e){}
+function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(prospects));}
+const oldRenderAll=renderAll;
+renderAll=function(){saveData();oldRenderAll();updateDashboardValues();};
+function updateDashboardValues(){
+ const total=prospects.reduce((a,p)=>a+(Number(p.value)||0),0);
+ const hot=prospects.filter(p=>p.score>=85).length;
+ const el=document.getElementById('metricProspects'); if(el) el.textContent=prospects.length;
+ const ca=document.getElementById('metricCA'); if(ca) ca.textContent=total.toLocaleString('fr-FR')+' €';
+ const ph=document.getElementById('metricHot'); if(ph) ph.textContent=hot;
+}
+function resetDemo(){if(confirm('Réinitialiser les données de démonstration ?')){prospects=[...initialProspects];saveData();renderAll();page('dashboard')}}
+function exportCRM(){const blob=new Blob([JSON.stringify(prospects,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='relancepro-prospects.json';a.click();URL.revokeObjectURL(a.href)}
+function editProspect(name){const p=prospects.find(x=>x.name===name);if(!p)return;const value=prompt('Valeur estimée (€)',p.value);if(value!==null)p.value=Number(value)||0;const status=prompt('Statut (Nouveau, Qualifié, RDV, Devis, Négociation, Gagné, Perdu)',p.status);if(status!==null)p.status=status;saveData();renderAll();}
+function deleteProspect(name){if(!confirm('Supprimer ce prospect ?'))return;prospects=prospects.filter(p=>p.name!==name);renderAll();}
+function moveProspect(name,status){const p=prospects.find(x=>x.name===name);if(p){p.status=status;renderAll();}}
+renderAll();
+const demoJobs=[{title:"Rénovation complète d'une salle de bain",type:"Salle de bain",location:"Blois",distance:"42 min",budget:"8 000–12 000 €",date:"Aujourd'hui",source:"Démo fictive",score:92,urgent:true,desc:"Rénovation complète avec douche, carrelage et reprise potentielle de plomberie."},{title:"Recherche plombier — fuite et rénovation",type:"Plomberie",location:"Vineuil",distance:"18 min",budget:"1 500–3 500 €",date:"Il y a 1 jour",source:"Démo fictive",score:88,urgent:true,desc:"Intervention sur réseau d'eau et remise en état d'une pièce."},{title:"Création salle d'eau",type:"Plomberie",location:"Mer",distance:"35 min",budget:"5 000–7 000 €",date:"Il y a 2 jours",source:"Démo fictive",score:81,urgent:false,desc:"Création d'une salle d'eau avec équipements à définir."}];
+function renderJobs(){document.getElementById('jobsList').innerHTML=demoJobs.map(j=>`<div class="card job"><div class="job-top"><h3>${j.title}</h3><span class="tag">${j.score}/100 🔥</span></div><p>${j.desc}</p><div class="job-meta"><span class="status today">📍 ${j.location} · ${j.distance}</span><span class="status future">💰 ${j.budget}</span><span class="status ${j.urgent?'late':'future'}">${j.urgent?'⚡ Urgent':'📅 '+j.date}</span></div><small class="muted">Source : ${j.source}</small><div class="job-actions" style="margin-top:12px"><button class="secondary" onclick="alert('Détail de l’opportunité : ${j.title}\\n\\n${j.desc}\\n\\nPertinence IA : ${j.score}/100')">Voir</button><button class="primary" onclick="addJobProspect('${j.title}',${j.score})">Ajouter au CRM</button></div></div>`).join('')}
+function searchJobs(){const trade=(document.getElementById('jobTrade').value||'').trim();const radius=document.getElementById('jobRadius').value;renderJobs();alert(`Recherche démo effectuée pour ${trade||'votre métier'} dans un rayon de ${radius}.\n\nLes résultats affichés sont fictifs et clairement signalés. Branchez une source/API autorisée pour obtenir des opportunités réelles.`)}
+function addJobProspect(title,score){prospects.unshift({name:'Nouveau chantier',project:title,value:0,score:score,status:'Nouveau',email:'À renseigner'});renderAll();alert('Opportunité ajoutée au CRM avec le score IA '+score+'/100.');page('prospects')}
+function analyzePhotos(files){if(files&&files.length){const names=[...files].map(f=>f.name).join(', ');const zone=document.querySelector('.upload-zone');if(zone)zone.querySelector('p').textContent=`${files.length} photo(s) sélectionnée(s) : ${names}`;simulateAnalysis()}}
+function useMyLocation(){if(!navigator.geolocation){alert('La géolocalisation n’est pas disponible sur ce navigateur.');return}navigator.geolocation.getCurrentPosition(pos=>{document.getElementById('jobCity').value=`Position ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`},()=>alert('Autorisation de localisation refusée. Vous pouvez saisir votre ville manuellement.'))}
+function simulateAnalysis(){document.getElementById('analysisCard').innerHTML=`<div class="card-head"><h3>🔎 Analyse IA</h3><span class="tag">Pré-analyse</span></div><div class="analysis-section"><h4>Type de chantier</h4><b>Rénovation de salle de bain</b><h4 style="margin-top:18px">Travaux potentiels</h4><ul><li>Remplacement du carrelage</li><li>Remplacement de la douche</li><li>Reprise des murs</li><li>Plomberie potentielle</li></ul><h4 style="margin-top:18px">Niveau de complexité</h4><span class="tag">Moyen</span><h4 style="margin-top:18px">Informations nécessaires</h4><ul><li>Dimensions exactes</li><li>État de la plomberie</li><li>Choix des matériaux</li><li>Accès au chantier</li></ul></div>`;document.getElementById('quoteCard').scrollIntoView({behavior:'smooth',block:'nearest'});document.getElementById('quoteLines').innerHTML=[['Dépose ancienne installation','1'],['Préparation des surfaces','À confirmer'],['Pose carrelage','Surface à confirmer'],['Installation nouvelle douche','À définir']].map(x=>`<div class="quote-line"><span>${x[0]}</span><input value="${x[1]}"><input placeholder="Prix à définir"></div>`).join('')}
+function createPhotoProspect(){prospects.unshift({name:'Client photo à qualifier',project:'Rénovation salle de bain — analyse photo',value:0,score:84,status:'Analyse',email:'À renseigner'});renderAll();alert('Brouillon transformé en prospect. Les éléments détectés, hypothèses et informations manquantes devront être vérifiés.');page('prospects')}
+function previewBA(input,id){const el=document.getElementById(id);if(el)el.textContent=`${input.files.length} photo(s) ajoutée(s)`;if(input.files.length)input.closest('.ba-placeholder').style.backgroundImage=`url(${URL.createObjectURL(input.files[0])})`;input.closest('.ba-placeholder').style.backgroundSize='cover';input.closest('.ba-placeholder').style.backgroundPosition='center'}
+function createReport(){alert('Compte-rendu généré en mode démo : état observé, travaux potentiels, éléments à vérifier et comparaison avant/après à compléter.') }
+renderJobs(); updateDashboardValues();
+</script>
+
+<script>
+function openApp(target="dashboard"){
+  document.getElementById("landingPage").style.display="none";
+  document.getElementById("appShell").style.display="flex";
+  if(typeof page==="function") page(target);
+  window.scrollTo(0,0);
+}
+function showLanding(){
+  document.getElementById("appShell").style.display="none";
+  document.getElementById("landingPage").style.display="block";
+  window.scrollTo(0,0);
+}
+</script>
+
+<script>
+/* RelancePro AI V6 — persistence layer */
+(function(){
+  const KEY="relancepro_v6_data";
+  const originalProspects = window.prospects ? JSON.parse(JSON.stringify(window.prospects)) : [];
+  const originalJobs = window.demoJobs ? JSON.parse(JSON.stringify(window.demoJobs)) : [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
+  if(saved?.prospects?.length) window.prospects=saved.prospects;
+  if(saved?.jobs?.length) window.demoJobs=saved.jobs;
+
+  window.RP6={
+    save(){
+      try{
+        localStorage.setItem(KEY,JSON.stringify({
+          prospects:window.prospects||[],
+          jobs:window.demoJobs||[],
+          updatedAt:new Date().toISOString()
+        }));
+      }catch(e){}
+    },
+    reset(){
+      if(!confirm("Réinitialiser toutes les données de démonstration ?")) return;
+      window.prospects=JSON.parse(JSON.stringify(originalProspects));
+      window.demoJobs=JSON.parse(JSON.stringify(originalJobs));
+      this.save();
+      if(typeof renderAll==="function") renderAll();
+      if(typeof renderJobs==="function") renderJobs();
+      if(typeof updateDashboardValues==="function") updateDashboardValues();
+    },
+    export(){
+      const payload={prospects:window.prospects||[],jobs:window.demoJobs||[],exportedAt:new Date().toISOString()};
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+      const a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);
+      a.download="relancepro-export.json";
+      a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),500);
+    }
+  };
+
+  const oldSave=window.saveData;
+  window.saveData=function(){
+    if(typeof oldSave==="function") oldSave();
+    RP6.save();
+  };
+
+  const oldCreate=window.createProspect;
+  window.createProspect=function(){
+    if(typeof oldCreate==="function") oldCreate();
+    RP6.save();
+  };
+
+  const oldMove=window.moveProspect;
+  window.moveProspect=function(name,status){
+    if(typeof oldMove==="function") oldMove(name,status);
+    RP6.save();
+  };
+
+  const oldDelete=window.deleteProspect;
+  window.deleteProspect=function(name){
+    if(typeof oldDelete==="function") oldDelete(name);
+    RP6.save();
+  };
+
+  const oldAdd=window.addJobProspect;
+  window.addJobProspect=function(title,score){
+    if(typeof oldAdd==="function") oldAdd(title,score);
+    RP6.save();
+  };
+
+  window.addEventListener("beforeunload",()=>RP6.save());
+})();
+</script>
+
+<script>
+if("serviceWorker" in navigator && (location.protocol==="https:" || location.hostname==="localhost")){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+</script>
+
+
+<script>
+window.RP_PROD={
+ async getProspects(){
+  if(window.RPBackend?.enabled){try{return await window.RPBackend.loadProspects()}catch(e){}}
+  return window.prospects||[];
+ },
+ async upsertProspect(p){
+  if(window.RPBackend?.enabled && window.RPBackend.saveProspect){
+   const user=await window.RPBackend.session();
+   if(user) p.user_id=user.user.id;
+   try{await window.RPBackend.saveProspect(p)}catch(e){console.warn(e)}
+  }
+  if(window.RP6?.save) window.RP6.save();
+ }
+};
+</script>
+
+<style>
+.rp-toast{position:fixed;right:20px;bottom:20px;z-index:99999;background:#111827;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 8px 30px #0002;font:500 14px system-ui}
+.rp-modal{position:fixed;inset:0;background:#0006;z-index:99998;display:grid;place-items:center;padding:20px}
+.rp-modal>div{background:#fff;max-width:720px;width:100%;max-height:90vh;overflow:auto;border-radius:18px;padding:24px}
+.rp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rp-grid input,.rp-grid select,.rp-grid textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px}
+@media(max-width:700px){.rp-grid{grid-template-columns:1fr}.rp-modal{padding:10px}}
+</style>
+<script>
+(function(){
+const K='relancepro_final_state';
+const demo={
+ prospects:[
+  {id:'p1',name:'Julien Martin',project:'Rénovation salle de bain',value:8500,score:94,status:'Nouveau',lastContact:'Aujourd’hui'},
+  {id:'p2',name:'Claire Bernard',project:'Peinture intérieure',value:4200,score:88,status:'Qualifié',lastContact:'Hier'},
+  {id:'p3',name:'Thomas Leroy',project:'Installation électrique',value:6200,score:81,status:'Devis',lastContact:'Il y a 3 jours'}
+ ],
+ jobs:[
+  {id:'j1',title:'Rénovation salle de bain',type:'Salle de bain',city:'Tours',time:'32 min',budget:'8 000–12 000 €',score:94,urgency:'Élevée',demo:true},
+  {id:'j2',title:'Mise aux normes électrique',type:'Électricité',city:'Blois',time:'48 min',budget:'4 500–7 000 €',score:91,urgency:'Moyenne',demo:true},
+  {id:'j3',title:'Peinture appartement',type:'Peinture',city:'Orléans',time:'1 h 12',budget:'3 000–5 000 €',score:84,urgency:'Faible',demo:true}
+ ],
+ reminders:[
+  {id:'r1',name:'Julien Martin',text:'Relancer pour le devis salle de bain',value:8500,state:'today'},
+  {id:'r2',name:'Claire Bernard',text:'Vérifier le retour sur le devis',value:4200,state:'late'},
+  {id:'r3',name:'Thomas Leroy',text:'Préparer le prochain échange',value:6200,state:'future'}
+ ]
+};
+let s; try{s=JSON.parse(localStorage.getItem(K))||demo}catch(e){s=demo}
+function save(){localStorage.setItem(K,JSON.stringify(s))}
+function toast(t){let x=document.createElement('div');x.className='rp-toast';x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2200)}
+function modal(title,body,submit){
+ let m=document.createElement('div');m.className='rp-modal';
+ m.innerHTML='<div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2>'+title+'</h2><button data-x>✕</button></div>'+body+'</div>';
+ m.querySelector('[data-x]').onclick=()=>m.remove();document.body.appendChild(m);
+ if(submit) submit(m)
+}
+window.RPFinal={
+ state:()=>s,
+ addProspect(){
+  modal('Ajouter un prospect',`<form id="rpForm" class="rp-grid">
+  <input name="name" placeholder="Nom du client" required><input name="project" placeholder="Projet">
+  <input name="value" type="number" placeholder="Valeur potentielle (€)"><input name="phone" placeholder="Téléphone">
+  <select name="status"><option>Nouveau</option><option>Qualifié</option><option>Rendez-vous</option><option>Devis</option><option>Négociation</option><option>Gagné</option></select>
+  <button type="submit">Créer le prospect</button></form>`,m=>{
+   m.querySelector('form').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target);
+    s.prospects.unshift({id:'p'+Date.now(),name:f.get('name'),project:f.get('project'),value:+f.get('value')||0,score:70,status:f.get('status'),lastContact:'Jamais',phone:f.get('phone')});
+    save();toast('Prospect créé');m.remove();if(window.renderAll)renderAll();location.hash='prospects';
+   }
+  })
+ },
+ addJobToCRM(j){
+  s.prospects.unshift({id:'p'+Date.now(),name:'Nouveau prospect',project:j.title,value:0,score:j.score,status:'Nouveau',lastContact:'Jamais',source:'Chantier démo'});
+  save();toast('Chantier ajouté au CRM');
+ },
+ analyzePhoto(){
+  modal('Analyser un chantier',`<div style="display:grid;gap:14px">
+   <input id="rpPhoto" type="file" accept="image/*" multiple>
+   <textarea id="rpDesc" rows="3" placeholder="Ajoutez une description ou les contraintes connues"></textarea>
+   <button id="rpAnalyze">Lancer la pré-analyse IA</button>
+   <div id="rpResult"></div></div>`,m=>{
+    m.querySelector('#rpAnalyze').onclick=()=>{
+     const files=m.querySelector('#rpPhoto').files;
+     const desc=m.querySelector('#rpDesc').value;
+     m.querySelector('#rpResult').innerHTML=`<div style="border:1px solid #eee;border-radius:14px;padding:16px">
+      <h3>Analyse indicative</h3>
+      <p><b>Éléments détectés :</b> surface/installation visible à confirmer, état apparent à vérifier.</p>
+      <p><b>Hypothèses :</b> travaux de préparation et remplacement possibles.</p>
+      <p><b>Informations manquantes :</b> dimensions exactes, matériaux, accès, contraintes techniques.</p>
+      <p><b>Complexité :</b> À confirmer sur place.</p>
+      <small>Photos reçues : ${files.length}. ${desc?'Description prise en compte.':''}</small>
+      <hr><b>Estimation indicative uniquement — vérification professionnelle obligatoire.</b>
+      <br><button id="rpQuote">Préparer un devis brouillon</button></div>`;
+     m.querySelector('#rpQuote').onclick=()=>this.newQuote();
+    }
+   })
+ },
+ newQuote(){
+  modal('Brouillon de devis',`<div id="rpQuoteBox">
+   <div class="rp-grid"><input placeholder="Titre du devis" value="Pré-analyse chantier"><input type="number" placeholder="Total indicatif"></div>
+   <div id="items" style="display:grid;gap:8px;margin-top:12px">
+    <div class="rp-grid"><input value="Dépose / préparation"><input placeholder="Prix à définir"></div>
+    <div class="rp-grid"><input value="Fourniture et pose"><input placeholder="Prix à définir"></div>
+   </div>
+   <button id="addLine">+ Ajouter une ligne</button>
+   <p><b>Estimation indicative nécessitant une vérification par un professionnel.</b></p>
+   <button id="saveQuote">Enregistrer le brouillon</button></div>`,m=>{
+    m.querySelector('#addLine').onclick=()=>{let d=document.createElement('div');d.className='rp-grid';d.innerHTML='<input placeholder="Prestation"><input placeholder="Prix à définir">';m.querySelector('#items').appendChild(d)};
+    m.querySelector('#saveQuote').onclick=()=>{s.lastQuote={createdAt:new Date().toISOString(),status:'draft'};save();toast('Brouillon enregistré');m.remove()}
+  })
+ },
+ findJobs(){
+  modal('Trouver des chantiers',`<div class="rp-grid"><input id="city" placeholder="Ville" value="Ma position"><select id="trade"><option>Tous les métiers</option><option>Plomberie</option><option>Électricité</option><option>Peinture</option><option>Rénovation</option></select><select id="radius"><option>1h30</option><option>30 min</option><option>1h</option></select></div>
+  <div id="jobs" style="display:grid;gap:10px;margin-top:15px"></div>`,m=>{
+   let out=m.querySelector('#jobs');out.innerHTML=s.jobs.map(j=>`<article style="border:1px solid #eee;border-radius:14px;padding:14px">
+   <b>${j.title}</b><div>📍 ${j.city} · ${j.time}</div><div>💰 ${j.budget} · 🔥 ${j.score}/100</div>
+   <small>Mode démo — aucune annonce réelle n'est inventée.</small><br><button data-id="${j.id}">Ajouter au CRM</button></article>`).join('');
+   out.querySelectorAll('button').forEach(b=>b.onclick=()=>{let j=s.jobs.find(x=>x.id===b.dataset.id);this.addJobToCRM(j)})
+  })
+ },
+ remind(id){
+  const r=s.reminders.find(x=>x.id===id); if(!r)return;
+  r.state='done';save();toast('Relance marquée comme faite');if(window.renderAll)renderAll();
+ },
+ reset(){s=JSON.parse(JSON.stringify(demo));save();location.reload()}
+};
+window.addEventListener('load',()=>{save()});
+})();
+</script>
+
+</body>
+</html>
